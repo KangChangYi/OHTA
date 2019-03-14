@@ -1,0 +1,267 @@
+<style lang="css">
+@import '/zanui/badge.wxss';
+</style>
+
+<style lang="less">
+.container {
+  flex-direction: column;
+}
+.frame-Remarks { 
+  // border:1px red solid;
+  margin: 5rpx auto;
+  width: 92%;
+  height: 130rpx;
+  border-radius: 5px;
+  background: white;
+  box-shadow: 1px 1px 12px #dfdfdf;
+  box-sizing: border-box;
+  padding: 20rpx;
+}
+
+.font{
+ //border:1px red solid;
+  color:black;
+  height:40rpx;
+  width:90%;
+  margin:10rpx auto;
+}
+.detailed-frame { 
+ //  border:1px red solid;
+  margin: 10rpx auto;
+  width: 92%;
+  height:fit-content;
+  border-radius: 5px;
+  background: white;
+  box-shadow: 1px 1px 12px #dfdfdf;
+  box-sizing: border-box;
+  padding:20rpx 20rpx 20rpx 20rpx;
+}
+.detailed-frame-border{
+  width:100%;
+  height:94rpx;
+  border-bottom:1px #EFEFEF solid;
+  font-size:13px;
+}
+.detailed-price{
+   width:33%;
+   height:95%;
+  // border:1px green solid;
+   color:black;
+   float:left;
+   display:flex;
+   align-items:center;
+}
+.detailed-number{
+   width:10%;
+   height:95%;
+  // border:1px green solid;
+   color:black;
+   float:left;
+   display:flex;
+   justify-content: center;
+   align-items:center;
+}
+
+.sumprice{
+  position: relative;
+  bottom:0;
+  width:98%;
+  height:50rpx;
+ // border:1px red solid;
+  margin-top:30rpx;
+
+}
+.page-bottom{ // border:1px green solid;
+  width:100%;
+  height:90rpx;
+  position:fixed;
+  bottom:0px;
+  left:0px;
+  background:#DFDFDF;
+  z-index:4000;
+}
+.page-bottom-but-pay{  
+    width:200rpx;
+    height:90rpx;
+    position:fixed;
+    right:0px;
+    color:white;
+    background:#d1a66f;
+    display:flex;
+    justify-content: center;
+    align-items:center;
+    float:left;
+}
+.page-bottom-price{  
+   width:170rpx;
+   height:90rpx;
+   float:left;
+   position:fixed;
+   right:200rpx;
+   display:flex;
+   align-items:center;
+   font-weight:bold;
+}
+</style>
+
+<template>
+
+   <view class="container">  
+                 
+        <!-- top -->
+          <view class="detailed-frame" > 
+            <view class="detailed-frame-border" style="height:50rpx;border:0px;margin-top:10rpx;" >
+               <!-- 取单地址 -->
+               <view style="width:100%;height:50rpx;" >
+                  <view style="width:15%;color:black;float:left;font-size:12px;">取单地址</view>
+                  <view style="width:83%;float:left;font-size:11px;text-align:right;">深圳市南山区北环大道天健创智中心2F-07号铺</view>
+               </view>
+
+            </view>
+          </view>
+        <!-- top -->
+          <!-- <image src="../images/phone.png" style="width:40rpx;height:40rpx;" /> -->
+  
+        <!-- 中间 -->
+            <view class="font">  订单详情 </view>
+            <!-- 订 单 详 情  -->
+            <view class="detailed-frame"> 
+              <block>
+                  <!-- 订单信息循环 -->   
+                  <view class="detailed-frame-border" wx:for="{{orderlist}}" wx:key="list">
+                        <view style="float:left;width:55%;" >
+                          <view style="height:40rpx;color:black;font-size:14px;">  {{item.name}}    </view>
+                          <view style="height:40rpx;color:#898989;font-size:10px;margin-top:5rpx">{{item.Sugar}}+{{item.temperature}} </view>
+                        </view>
+
+                        <view class="detailed-price">
+                             ￥{{item.price}} 
+                        </view>
+                        
+                        <view class="detailed-number" >
+                             × {{item.productnumber}}
+                        </view>      
+                  </view>
+                  <!-- 订单信息循环 -->   
+              <block>
+              
+              <view class="sumprice" >
+                  <view style="width:50%;float:left;color:black" >
+                      订单总额
+                  </view>
+                  <view style="width:48%;float:left;text-align:right;color:red">
+                      ￥{{orderprice}}
+                  </view>
+              </view>
+            </view>
+       <!-- 中间 -->
+
+       <!-- 备注 -->
+          <view class="font" >备注</view>
+            <view class="frame-Remarks">
+              <textarea bindinput="input" class="weui-textarea" placeholder="请输入备注,最多50个字(填写具体取单时间)" maxlength="50" style="height:100%;width:100%">
+              </textarea>
+          </view>
+          <view style="width:90%;margin:0 auto;height:40rpx;color: red;font-size:12px">*仅园区内可外送，请填写地址和手机号</view>   
+       <!-- 备注 -->
+
+
+        <!-- 底部购物袋 -->
+        <view class="page-bottom" >
+            <view class="page-bottom-price">
+              合计 :
+              <view style="font-weight:bold;color:black">￥{{orderprice}} </view>
+            </view>
+            <view @tap="pay" class="page-bottom-but-pay" >
+                去支付
+            </view>
+        </view>
+        <!-- 底部购物袋 -->
+
+   </view>
+
+</template>
+
+
+
+<script>
+import wepy from 'wepy'
+const app = getApp()
+export default class Index extends wepy.page {
+  config = {
+    navigationBarBackgroundColor: '#f5f5f5',
+    navigationBarTitleText: '订单结算'
+  };
+  data = {
+    orderlist: [],
+    orderprice: 0,
+    integral: '0',
+    openId: 2,
+    userName: 'zhuizhu',
+    productName: '',
+    productnumber: '',
+    // productPrice: 0,
+    productSpec: '',
+    remark: ''
+  };
+  methods = {
+    pay() {
+      var that = this
+      //  准备将订单信息整合发送给服务器
+      var order = that.orderlist
+      for (var i = 0; i < order.length; i++) {
+        that.productName += '{' + order[i].name + '} '
+        that.productSpec += '{' + order[i].Sugar + ',' + order[i].temperature + '} '
+        that.productnumber += '{' + '×' + order[i].productnumber + '} '
+      }
+      console.log(that.productName)
+      console.log(that.productSpec)
+      console.log(that.remark)
+      console.log(that.productnumber)
+      // 发送数据给服务器
+      wepy.request({
+        url: 'http://192.168.10.113:8080/ohtaOrder/addOrder', // 接口地址
+        header: { 'content-type': 'application/x-www-form-urlencoded' }, // post请求
+        data: {
+          openId: that.openId,
+          userName: that.userName,
+          productName: that.productName,
+          productPrice: that.orderprice,
+          productSpec: that.productSpec,
+          number: that.productnumber,
+          remark: that.remark
+        },
+        method: 'POST',
+        success: function(res) {
+          console.log(res.data)
+        }
+      })
+       // 发送数据给服务器
+    },
+    input(e) {
+      this.remark = e.detail.value
+      console.log(this.remark)
+    }
+    // methods
+  };
+
+  events = {};
+
+  onLoad(options) {
+    var that = this
+
+    that.orderlist = app.order
+    that.orderprice = app.sumprice
+    console.log(that.orderprice)
+    console.log(that.orderlist)
+  }
+  //   console.log('传递过来的购物车信息11')
+  //   var order = options.info
+  //   console.log(options.info)
+  //   that.setData({
+  //     orderlist: order
+  //   })
+  //   console.log('传递过来的购物车信息')
+  //   console.log(that.orderlist)
+}
+</script>

@@ -1,0 +1,870 @@
+<style lang="css">
+@import '/zanui/icon.wxss';
+@import '/zanui/badge.wxss';
+@import '/zanui/panel.wxss';
+@import '/zanui/cell.wxss';
+@import '/zanui/btn.wxss';
+</style>
+
+<style lang="less">
+.container {
+  background: white;
+}
+.page-left {
+  width: 22%;
+  background: rgb(245, 245, 245);
+}
+.page-right {
+  width: 78%;
+  background: white;
+  box-sizing: border-box;
+  padding-left: 20rpx;
+  z-index: initial;
+}
+.page-bottom {
+  width: 100%;
+  height: 90rpx;
+  position: fixed;
+  bottom: 0px;
+  left: 0px; //border:1px green solid;
+  background: #dfdfdf;
+  z-index: 4000;
+}
+.scroll-view-menu {
+  //奶茶系列名
+  white-space: pre-wrap;
+  font-size: 12px;
+  width: 100%; //border:1px red solid;
+  height: fit-content;
+  padding: 30rpx 0 30rpx 25rpx;
+  display: flex;
+  align-items: center;
+}
+.scroll-view-item {
+  // 奶茶详细信息
+  width: 100%;
+  height: 230rpx; //border:1px greenyellow solid;
+  margin-bottom: 10rpx;
+  display: flex;
+  justify-content: center;
+}
+.index-pic {
+  height: 300rpx;
+  width: 100%; //border: 1px yellowgreen solid;
+  margin-bottom: 15rpx;
+  background: greenyellow;
+}
+.product-series {
+  font-size: 12px;
+  width: 100%; //border:1px olive solid;
+  height: 40rpx;
+  color: #454545;
+  font-weight: bold;
+}
+.product-list {
+  width: 100%;
+  height: 200rpx;
+  margin-bottom: 20rpx; // border: 1px gray solid;
+  padding: 10rpx;
+  box-sizing: border-box;
+}
+.product-list-pic {
+  float: left;
+  width: 148rpx;
+  height: 148rpx; // border: 1px rosybrown dashed;
+}
+.product-list-name {
+  color: #232323;
+  font-size: 12px;
+  float: left;
+  width: 200rpx;
+  height: 40rpx; //border: 1px khaki dashed;
+}
+.product-list-introduce {
+  float: left;
+  width: 385rpx;
+  height: 60rpx; // border: 1px khaki dashed;
+  font-size: 10px;
+  color: #ababab;
+}
+.product-list-price {
+  color: black;
+  font-weight: bold;
+  font-size: 16px;
+  float: left;
+  width: 120rpx;
+  height: 50rpx; // border: 1px wheat dashed;
+}
+.product-list-bottom {
+  float: left;
+  width: 260rpx;
+  height: 50rpx; //border: 1px firebrick dashed;
+  box-sizing: border-box;
+  padding-left: 125rpx;
+}
+.product-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: center; // border: 1px white solid;
+  width: 130rpx;
+  height: 50rpx;
+  border-radius: 50px;
+  background: #565656;
+  color: white;
+  font-size: 10px;
+}
+.mask {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #000;
+  z-index: 9000;
+  opacity: 0.5;
+}
+.modalDlg {
+  width: 580rpx; //border:1px red solid;
+  height: 620rpx;
+  position: fixed;
+  top: 50%;
+  left: 0;
+  z-index: 9999;
+  margin: -370rpx 85rpx;
+  background-color: #fff;
+  border-radius: 36rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.submit-top {
+  width: 80%;
+  height: 55rpx;
+  color: black;
+  font-size: 14px;
+  font-weight: bolder;
+  justify-content: center;
+  display: flex;
+  margin-top: 15rpx;
+}
+.submit-mid {
+  width: 100%;
+  height: 450rpx;
+  background: white;
+  padding-left: 17rpx;
+  box-sizing: border-box;
+}
+.submit-mid-item {
+  width: fit-content;
+  height: fit-content;
+  float: left;
+  margin: 15rpx 0 30rpx 0; //border: 1px red solid;
+}
+.submit-bottom {
+  background: #f7f7f7;
+  border-bottom-left-radius: 19px;
+  border-bottom-right-radius: 19px;
+  width: 100%;
+  height: 100rpx;
+  display: flex;
+  align-items: center;
+}
+.submt-button-view {
+  margin-top: 20rpx;
+  margin-right: 20rpx;
+  float: left;
+  width: 120rpx;
+  height: 50rpx;
+  font-size: 11px;
+  border: 1px #9a9a9a solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.border {
+  // margin-top: 86rpx;
+  font-size: 13px;
+  color: #565656;
+  display: flex;
+  width: 100%;
+}
+.page-bottom-but-pay {
+  width: 200rpx;
+  height: 90rpx;
+  position: fixed;
+  right: 0px;
+  color: white;
+  background: #d1a66f;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  float: left;
+}
+.page-bottom-price {
+  width: 170rpx;
+  height: 90rpx;
+  float: left;
+  position: fixed;
+  right: 200rpx;
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+}
+.commodity_screen {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #000;
+  opacity: 0.2; //overflow: hidden;
+  z-index: 1000;
+  color: #fff;
+}
+.commodity_attr_box {
+  text-align: left;
+  width: 100%; // overflow: hidden;
+  position: fixed;
+  bottom: 90rpx;
+  left: 0;
+  z-index: 2000;
+  background: #fff;
+}
+.bag-top {
+  height: 60rpx;
+  background: #f3f3f3;
+  display: flex;
+  align-items: center;
+  color: #898989;
+}
+.bag-cell {
+  border-bottom: 1px #dfdfdf solid;
+  width: 100%;
+  height: fit-content;
+  padding: 40rpx 40rpx 30rpx 40rpx;
+  display: flex;
+  align-items: center;
+}
+.bag-name {
+  color: #232323;
+  font-size: 14px;
+  font-weight: bold;
+  width: fit-content;
+  height: fit-content;
+}
+.bag-introduce {
+  color: #ababab;
+  font-size: 12px;
+  width: 300rpx;
+  height: fit-content;
+  white-space: pre-wrap;
+}
+.bag-price {
+  color: #232323;
+  font-size: 14px;
+  height: 50rpx;
+  font-weight: bold;
+  float: left;
+  width: 70rpx;
+  margin-left: 50rpx;
+}
+.bag-number {
+  color: #232323;
+  width: fit-content;
+  float: left;
+  display: flex;
+  margin-left: 45rpx;
+  align-items: center;
+}
+</style>
+
+<template>
+  <view class="container">
+    <indexTop> </indexTop>
+    <view class="border" style="height:85vh">
+      <scroll-view class="page-left" style="height:100%" scroll-y="true">
+        <!-- 左侧菜单 -->
+        <block wx:for="{{Navigation}}" wx:key="name">
+          <view class="scroll-view-menu" data-id="{{index}}" data-list="{{index}}" @tap="list" style="{{index==list?'background:white;color:black':'color:gray;height:{{wHeight}}px'}}"> {{item.name}} </view>
+        </block>
+        <!-- 左侧菜单 -->
+      </scroll-view>
+      <!-- 右侧菜单 -->
+      <scroll-view scroll-y="true" style="height:100%" class="page-right" scroll-into-view="x{{classifyViewed}}">
+        <!-- <view class="index-pic"> <image src="../images/pic1.png" style="width:148rpx;height:148rpx;" /> </view>
+        <view class="index-pic"> <image src="../images/pic1.png" style="width:148rpx;height:148rpx;" /> </view> -->
+        <view id="x{{fa}}" wx:for="{{dest}}" wx:key="item.type" wx:for-index="fa">
+          <view class="product-series">
+            {{item.type}}
+          </view>
+          <!-- 商品详细信息循环 -->
+          <view class="scroll-view-item" wx:for="{{item.detailed}}" wx:for-index="son" wx:for-item="detailed" wx:key="title">
+            <view class="product-list">
+              <view class="product-list-pic">
+                <image src="{{detailed.productImage}}" style="width:148rpx;height:148rpx" />
+                <!-- 没改 -->
+              </view>
+              <view class="product-list-name">
+                {{detailed.productName}}
+              </view>
+              <view class="product-list-introduce">
+                {{detailed.productIntroduction}}
+              </view>
+              <view class="product-list-price">
+                ￥{{detailed.productPrice}}
+              </view>
+              <view class="product-list-bottom">
+                <view class="product-bottom zan-badge" @tap="submit" data-fa="{{fa}}" data-son="{{son}}" data-name="{{detailed.productName}}" data-price="{{detailed.productPrice}}">
+                  选规格
+                  <!-- <view class="zan-badge__count" > {{typenumber}} </view> -->
+                </view>
+              </view>
+            </view>
+          </view>
+          <!-- 商品详细信息循环 -->
+        </view>
+      </scroll-view>
+      <!-- 右侧菜单 -->
+      <!-- 规格弹出幕布 -->
+      <view class="mask" catchtouchmove="preventTouchMove" wx:if="{{showModal}}"></view>
+      <!-- 规格弹出内容 -->
+      <!-- 规格弹出内容 -->
+      <view class="modalDlg" wx:if="{{showModal}}">
+        <view class="submit-top"> {{detailedname}} </view>
+        <icon size="27" type="cancel" @tap="go" style="position:absolute;top:15rpx;right:15rpx;"> </icon>
+        <view wx:for="{{Specifications}}" wx:key="Specifications">
+          <view class="submit-mid">
+            <view class="submit-mid-item">
+              甜度
+              <view style="width:100%;">
+                <!-- 甜度循环 -->
+                <block wx:for="{{item.Sugar}}" wx:key="Sugar">
+                  <view class="submt-button-view" data-gidtwo="{{index}}" @tap="clicktwo" style="{{index == gidtwo?'background:#ffe9de;border-color:#e47e47;color:#e47e47':'color:gray'}}">{{item.name}}</view>
+                </block>
+                <!-- 甜度循环 -->
+              </view>
+            </view>
+            <view class="submit-mid-item">
+              温度
+              <view style="width:100%;">
+                <!-- 温度循环 -->
+                <block wx:for="{{item.temperature}}" wx:key="temperature">
+                  <view class="submt-button-view" data-gidthree="{{index}}" @tap="clickthree" style="{{index == gidthree?'background:#ffe9de;border-color:#e47e47;color:#e47e47':'color:gray'}}">{{item.name}}</view>
+                </block>
+                <!-- 温度循环 -->
+              </view>
+            </view>
+            <view class="submit-mid-item" style="margin-top:85rpx;font-size:11px;color:gray">
+              *大爆炸系列建议标准做法口感更佳~
+            </view>
+          </view>
+        </view>
+        <view class="submit-bottom">
+          <!-- 价格 -->
+          <view style="width:57%;box-sizing:border-box;padding-left:25rpx;color: black;font-weight: bold;font-size: 16px;"> ￥{{detailedprice}}</view>
+          <!-- 购物车按扭 -->
+          <view style="width:43%">
+            <view class="product-bottom" @tap="addbag" style="width:210rpx;border-radius:15px;height:50rpx;margin-top:10rpx;margin-left:10rpx">
+              <image src="../images/shoppingbag.png" style="width:40rpx;height:40rpx" /> 加入购物车
+            </view>
+          </view>
+        </view>
+      </view>
+      <!-- 规格弹出内容 -->
+      <!-- 规格弹出内容 -->
+      <!-- 右侧菜单 -->
+    </view>
+    <!-- 底部购物袋 -->
+    <view class="page-bottom">
+      <!-- 徽章 -->
+      <view class="zan-badge" style="width:135rpx;" wx:if="{{bagmark}}">
+        <view class="zan-badge__count"> {{bagnumber}} </view>
+      </view>
+      <!-- 购物袋图标 -->
+      <image @tap="showModal" src="../images/bag.png" style="width:110rpx;height:110rpx;position:fixed;left:40rpx;bottom:10rpx;" />
+      <view class="page-bottom-price">
+        合计 :
+        <view style="font-weight:bold;color:black">￥{{sumprice}} </view>
+      </view>
+      <view @tap="pay" class="page-bottom-but-pay" style="pointer-events:{{paymark}}">
+        去结算
+      </view>
+    </view>
+    <!-- 底部购物袋 -->
+    <!-- 购物袋弹出层 -->
+    <view class="commodity_screen" @tap="hideModal" wx:if="{{showModalStatus}}"></view>
+    <view animation="{{animationData}}" class="commodity_attr_box" wx:if="{{showModalStatus}}">
+      <!-- 清空购物车按钮 -->
+      <view class="bag-top" style="padding-left:30rpx;border-bottom:1px #DFDFDF solid;">
+        <view @tap="cleanbag" style="display:flex; justify-content:center;align-items:center;">
+          <image src="../images/junk.png" style="width:32rpx;height:32rpx;margin-right:10rpx" /> 清空购物车</view>
+      </view>
+      <!-- 购物车滚动 -->
+      <scroll-view scroll-y="true" style="max-height:500rpx">
+        <!-- 购物车商品信息 -->
+        <!-- 循环 -->
+        <block wx:for="{{baginfo}}" wx:key="unset">
+          <view class="bag-cell">
+            <view style="width:fit-content;float:left;height:100%">
+              <view class="bag-name">{{item.name}} </view>
+              <view class="bag-introduce">{{item.Sugar}},{{item.temperature}} </view>
+            </view>
+            <view class="bag-price">￥{{item.price}} </view>
+            <view class="bag-number">
+              <!-- 减号 -->
+              <view @tap="numberjian" class="{{item.productnumber <= 1 ? 'disabled':''}}" data-nums="{{index}}">
+                <image src="../images/jian.png" style="width:48rpx;height:48rpx;margin-right:30rpx;" />
+              </view>
+              <view style="width:50rpx;height:50rpx;text-align:center;"> {{item.productnumber}} </view>
+              <!-- 加号 -->
+              <view @tap="numberplus" data-nums="{{index}}">
+                <image src="../images/plus.png" style="width:48rpx;height:48rpx;margin-left:30rpx" />
+              </view>
+            </view>
+          </view>
+        </block>
+      </scroll-view>
+    </view>
+    <!-- 购物袋弹出层 -->
+    <!-- container -->
+  </view>
+</template>
+
+
+
+
+<script>
+import wepy from 'wepy'
+import zanStepper from '../components/zan-stepper'
+import indexTop from './components/indextop'
+const app = getApp()
+export default class Index extends wepy.page {
+  config = {};
+  components = {
+    zanStepper3: zanStepper,
+    indexTop: indexTop
+  };
+  events = {
+    zanStepperChange({ componentId, stepper }, event) {
+      console.log(componentId, stepper, event)
+      this[componentId] = stepper
+      this.$apply()
+    }
+  };
+  methods = {
+    addbag(e) {
+      var that = this
+      var son = that.son
+      var fa = that.fa
+      var id2 = that.gidtwo
+      var id3 = that.gidthree
+      var Sugar = that.Specifications[0].Sugar[id2].name
+      var temperature = that.Specifications[0].temperature[id3].name
+      var name = that.dest[fa].detailed[son].productName
+      var price = that.dest[fa].detailed[son].productPrice
+      // if(如果商品规格相同，加数量，否则插入记录)
+      if (that.baginfo.length !== 0) {
+        var flag = false
+        var num = 0
+        for (var i = 0; i < that.baginfo.length; i++) {
+          if (that.baginfo[i].name === name) {
+            if (that.baginfo[i].Sugar === Sugar) {
+              if (that.baginfo[i].temperature === temperature) {
+                flag = true
+                num = i
+              }
+            }
+          }
+        }
+        if (flag === true) {
+          that.baginfo[num].productnumber++
+        } else {
+          that.baginfo.push({
+            name: name,
+            Sugar: Sugar,
+            temperature: temperature,
+            price: price,
+            productnumber: 1
+          })
+        }
+        flag = false
+      } else {
+        that.baginfo.push({
+          name: name,
+          Sugar: Sugar,
+          temperature: temperature,
+          price: price,
+          productnumber: 1
+        })
+      }
+      // 总价增加，向购物车数组插入数据
+      that.sumprice += price
+      // 购物车数量标识加一
+      that.bagmark = true
+      that.bagnumber += 1
+      console.log(that.bagnumber)
+      // 规格标识加一
+      // that.typemark = true
+      // that.typenumber += 1
+      // var price = that.detailedprice
+      // var name = that.detailedname
+      // that.data.baginfo[index].name = that.detailedname
+      // that.data.baginfo[index].price = that.detailedprice
+      // name: '蛇皮奶茶', introduce: '蛇皮奶茶珍珠奶茶珍珠奶茶珍珠奶', price: 9, productnumber: 1
+    },
+    list(e) {
+      var id = e.target.dataset.id
+      this.classifyViewed = id
+      console.log(this.classifyViewed)
+      var Navigation = e.currentTarget.dataset.list
+      this.list = Navigation
+    },
+    // 选甜度
+    clicktwo(e) {
+      var that = this
+      var ids = e.currentTarget.dataset.gidtwo // 获取自定义的id
+      this.gidtwo = ids // 把获取的自定义id赋给当前组件的id(即获取当前组件)
+      console.log(ids)
+      console.log(that.Specifications[0].Sugar[ids].name)
+    },
+    // 选温度
+    clickthree(e) {
+      var that = this
+      var ids = e.currentTarget.dataset.gidthree // 获取自定义的id
+      this.gidthree = ids // 把获取的自定义id赋给当前组件的id(即获取当前组件)
+      console.log(ids)
+      console.log(that.Specifications[0].temperature[ids].name)
+    },
+    preventTouchMove() {},
+    submit(e) {
+      var that = this
+      var son = e.currentTarget.dataset.son
+      var fa = e.currentTarget.dataset.fa
+      that.son = son
+      that.fa = fa
+      that.gidtwo = 0
+      that.gidthree = 0
+      console.log(son)
+      console.log(fa)
+      // 支付按钮的启用
+      that.paymark = 'auto'
+      // 规格选择
+      that.detailedprice = e.currentTarget.dataset.price // 获取自定义的price
+      that.detailedname = e.currentTarget.dataset.name // 获取自定义的name
+      // this.detailedindex = e.currentTarget.dataset.detailed
+      // console.log(this.detailedprice)
+      that.showModal = true
+    },
+    go(e) {
+      var that = this
+      // var son = that.son
+      // var fa = that.fa
+      // that.Cheeses[fa].detailed[son].showModal = false
+      that.showModal = false
+    },
+    // 购物车减少商品
+    numberjian(e) {
+      var that = this
+      var nums = e.currentTarget.dataset.nums
+      console.log(nums)
+      var productnumber = that.baginfo[nums].productnumber
+      var pr = that.baginfo[nums].price
+      if (productnumber > 1) {
+        that.baginfo[nums].productnumber--
+        that.sumprice -= pr
+      } else {
+        // 当数量为1书
+        var bag = that.baginfo
+        console.log(bag[nums])
+        bag.splice(nums, 1)
+        that.baginfo = bag
+        that.sumprice -= pr
+        // 购物车当数量为0时,遮罩层隐藏
+        if (that.baginfo.length === 0) {
+          var animation = wepy.createAnimation({
+            duration: 0,
+            timingFunction: 'ease-out',
+            delay: 0
+          })
+          that.animation = animation
+          animation.translateY(0).step()
+          that.setData({
+            animationData: animation.export()
+          })
+          setTimeout(function() {
+            animation.translateY(0).step()
+            that.setData({
+              animationData: animation.export(),
+              showModalStatus: false
+            })
+          }, 0)
+        }
+        console.log(pr)
+        // 支付按钮的禁用
+        that.paymark = 'none'
+      }
+      console.log('点击-')
+      // 购物车数量标识减一
+      if (that.bagnumber >= 1) {
+        that.bagnumber -= 1
+        console.log(that.bagnumber)
+      }
+      if (that.bagnumber === 0) {
+        that.bagmark = false
+      }
+    },
+    // 购物车增加商品
+    numberplus(e) {
+      var that = this
+      var nums = e.currentTarget.dataset.nums
+      console.log('刚刚您点击了加+')
+      var productnumber = that.baginfo[nums].productnumber
+      if (productnumber < 10) {
+        that.baginfo[nums].productnumber++
+        var pr = that.baginfo[nums].price
+        that.sumprice += pr
+      }
+      // this.baglist = this.data.baglist
+      // console.log('baglist:' + this.data.baglist)
+      // 购物车数量标识加一
+      that.bagmark = true
+      that.bagnumber += 1
+      console.log(that.bagnumber)
+    },
+    // 清空购物车操作
+    cleanbag(e) {
+      var that = this
+      that.sumprice = 0
+      var bag = that.baginfo
+      var leng = that.baginfo.length
+      bag.splice(0, leng)
+      that.baginfo = bag
+      // 购物车标记清零
+      that.bagmark = false
+      that.bagnumber = 0
+      // 清空购物车时,遮罩层隐藏
+      var animation = wepy.createAnimation({
+        duration: 0,
+        timingFunction: 'ease-out',
+        delay: 0
+      })
+      that.animation = animation
+      animation.translateY(0).step()
+      that.setData({
+        animationData: animation.export()
+      })
+      setTimeout(function() {
+        animation.translateY(0).step()
+        that.setData({
+          animationData: animation.export(),
+          showModalStatus: false
+        })
+      }, 0)
+      // 清空购物车时,遮罩层隐藏
+      // 支付按钮的禁用
+      that.paymark = 'none'
+    }, // 加入购物车按钮
+    pay() {
+      var that = this
+      // var app = getApp()
+      app.order = that.baginfo
+      app.sumprice = that.sumprice
+      wepy.navigateTo({
+        url: 'son/order-pay'
+      })
+    },
+    showModal() {
+      // 显示购物遮罩层
+      var that = this
+      if (that.baginfo.length !== 0) {
+        var animation = wepy.createAnimation({
+          duration: 250,
+          timingFunction: 'ease-out',
+          delay: 0
+        })
+        that.animation = animation
+        animation.translateY(350).step()
+        that.setData({
+          animationData: animation.export(),
+          showModalStatus: true
+        })
+        setTimeout(function() {
+          animation.translateY(0).step()
+          that.setData({
+            animationData: animation.export()
+          })
+        }, 0)
+      }
+    },
+    hideModal() {
+      // 隐藏购物遮罩层
+      var that = this
+      var animation = wepy.createAnimation({
+        duration: 0,
+        timingFunction: 'ease-out',
+        delay: 0
+      })
+      that.animation = animation
+      that.setData({
+        animationData: animation.export()
+      })
+      setTimeout(function() {
+        animation.translateY(0).step()
+        that.setData({
+          animationData: animation.export(),
+          showModalStatus: false
+        })
+      }, 0)
+    } // hide
+  }; // methods
+  data = {
+    // 购物车数量及标识
+    bagnumber: 0,
+    bagmark: false,
+    // 支付按钮标识
+    paymark: 'none',
+    // 规格选择
+    showModal: false,
+    // typenumber: 0,
+    // typemark: false,
+    fa: 0,
+    son: 0,
+    sumprice: 0,
+    // 菜单循环
+    classifyViewed: '',
+    // 规格循环id
+    gidtwo: 0,
+    gidthree: 0,
+    // 左侧菜单初始选中ID
+    list: 0,
+    //
+    stepper3: 1,
+    min3: 0,
+    max3: 10,
+    // // 商品信息传递
+    detailedname: '',
+    detailedprice: 0,
+    // detailedindex: 0,
+    dest: [],
+    Navigation: [
+      {
+        id: 0,
+        name: '鲜果茶'
+      },
+      {
+        id: 1,
+        name: '大爆炸'
+      },
+      {
+        id: 2,
+        name: '咖啡'
+      },
+      {
+        id: 3,
+        name: '海盐芝士'
+      },
+      {
+        id: 4,
+        name: '奶茶'
+      },
+      {
+        id: 5,
+        name: '一杯纯茶'
+      }
+    ],
+    Specifications: [
+      {
+        Sugar: [
+          {
+            name: '正常'
+          },
+          {
+            name: '少糖'
+          },
+          {
+            name: '无糖'
+          }
+        ],
+        temperature: [
+          {
+            name: '正常冰'
+          },
+          {
+            name: '少冰'
+          },
+          {
+            name: '去冰'
+          }
+        ]
+      }
+    ],
+    baginfo: [],
+    // order界面未完成订单
+    Unfinishedorder: [],
+    openId: 2
+  };
+  onShow() {
+    // 重新请求订单页数据   预加载
+    console.log('index-onShow')
+    var that = this
+    // 获取ohtaOrder/getUnfinshed   用户未完成订单  opid
+    wepy.request({
+      url: 'http://192.168.10.113:8080/ohtaOrder/getUnfinshed', // 接口地址 ohtaOrder/getUnfinshed   用户未完成订单  opid
+      header: { 'content-type': 'application/json' }, // 默认值不用改
+      data: {
+        openId: that.openId
+      },
+      success: function(res) {
+        console.log(res.data.data)
+        app.Unfinishedorder = res.data.data
+        // app.noneorder = false
+      }
+    })
+  }
+  onLoad() {
+    var that = this
+    wepy.request({
+      url: 'http://192.168.10.113:8080/ohtaProduct/allProduct', // 接口地址
+      header: { 'content-type': 'application/json' }, // 默认值不用改
+      data: {},
+      success: function(res) {
+        console.log('下面是商品信息')
+        // console.log(res.data)
+        that.product = res.data.data
+        console.log(that.product)
+        console.log('onLoad信息')
+        // 数据改变// 数据改变// 数据改变//
+        var oldpro = that.product
+        console.log(oldpro)
+        // 数据改变// 数据改变// 数据改变//
+        var newpro = {}
+        for (var i = 0; i < oldpro.length; i++) {
+          var list = oldpro[i]
+          if (!newpro[list.productType]) {
+            that.dest.push({
+              type: list.productType,
+              detailed: [list]
+            })
+            // console.log(dest)
+            // console.log('dest')
+            newpro[list.productType] = list
+          } else {
+            for (var j = 0; j < that.dest.length; j++) {
+              var dj = that.dest[j]
+              // console.log('dj')
+              // console.log(dj)
+              if (dj.type === list.productType) {
+                dj.detailed.push(list)
+                break
+              }
+            }
+          }
+        }
+        that.setData({ dest: that.dest })
+        console.log('处理后的数据')
+        console.log(that.dest)
+      }
+    })
+  }
+}
+</script>

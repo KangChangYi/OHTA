@@ -1,0 +1,43 @@
+<style lang="less">
+.page-top {
+  box-sizing: border-box;
+  padding-left: 30rpx;
+  box-shadow: 0px 1px 8px #dfdfdf;
+  width: 100vw;
+  height: 90rpx;
+  position:relative;
+  z-index:999;
+  top: 0;
+  left: 0;
+}
+</style>
+
+<template>
+
+     <view class="page-top">
+
+       <view style="height:45rpx">
+           <view style="color:black;font-size:15px;font-weight:bold;float:left;" > 天健创智中心店 </view>
+           <view style="color:#ABABAB;border:1px #ABABAB solid;border-radius:7px;font-size:8px;float:left;width:90rpx;margin:15rpx 0 0 10rpx;padding-left:5rpx;">园区可外送</view>
+       </view>
+
+       <view style="color:#ABABAB;font-size:9px;width:90%;margin-top:10rpx;" > 联系电话:15655555555  南山区北环大道天健创智中心2F-07号铺 </view>
+       
+     </view>
+
+</template>
+
+
+
+<script>
+import wepy from 'wepy'
+
+export default class indexTop extends wepy.component {
+  config = {};
+  data = {};
+  methods = {};
+
+  events = {};
+  onLoad() {}
+}
+</script>

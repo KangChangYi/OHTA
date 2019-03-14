@@ -1,0 +1,146 @@
+<style lang="less">
+.container {
+  font-size: 12px;
+}
+.none-frame {
+  // border:1px red solid;
+  margin: 25rpx auto;
+  width: 92vw;
+  height: 95vh;
+  border-radius: 20px;
+  background: white;
+  box-shadow: 0px 0px 12px #dfdfdf;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /*水平居中*/
+}
+
+.frame {
+  margin: 25rpx auto;
+  width: 92%;
+  height: 228rpx;
+  border-radius: 10px;
+  background: white;
+  box-shadow: 0px 0px 10px #dfdfdf;
+  box-sizing: border-box;
+  padding: 34rpx 34rpx 34rpx 34rpx;
+}
+.time {
+  width: 77%;
+  margin-top: 15rpx;
+  height: 40rpx;
+  float: left;
+  // border: 1px salmon solid;
+}
+.price {
+  // border: 1px red solid;
+  color: #ff954d;
+  font-size: 15px;
+  font-weight: bold;
+  margin-top: 15rpx;
+  float: left;
+}
+.number {
+  margin-top: 15rpx;
+  // border: 1px red solid;
+  float: right;
+  color: #ff954d;
+  font-size: 14px;
+  font-weight: bold;
+}
+.complate {
+  z-index: 999;
+  width: 101rpx;
+  height: 90rpx;
+  position: relative;
+  left: 410rpx;
+  top: -100rpx;
+}
+</style>
+
+
+<template>
+
+   <view class="container">
+
+    <!-- 没有订单时界面 -->
+    <view class="none-frame" wx:if="{{noneorder}}">
+      <image src="../../images/Expression.png" style="width:128rpx;height:128rpx;">
+        <view style="margin-top:50rpx;margin-bottom:300rpx;">暂无历史订单 </view>
+    </view>
+    <!-- 没有订单时界面 --> 
+
+    <!-- 有订单时界面 -->
+  
+      <view class="frame" wx:for="{{history}}" wx:key="item.pkId">
+        <view class="time" style="margin:0;" >下单时间 : {{item.gmtCreate}}</view>
+        <view class="time" style="width:100%" >订单号 ：{{item.orderId}}</view>
+        <view class="price">￥{{item.productPrice}}</view>
+        <view class="number">取单号：123456</view>
+        <image class="complate" src="../../images/complate.png"  />
+      </view>
+ 
+    <!-- 有订单时界面 -->
+
+
+
+
+   </view>
+
+
+</template>
+
+
+
+<script>
+import wepy from 'wepy'
+
+export default class history extends wepy.page {
+  config = {
+    navigationBarBackgroundColor: '#f5f5f5',
+    navigationBarTitleText: '历史订单'
+  };
+  data = {
+    noneorder: true,
+    history: []
+    // Unfinishedorder: [
+    //   {
+    //     gmtCreate: '20290304',
+    //     productPrice: '22',
+    //     Orderid: '333333333333333333'
+    //   },
+    //   {
+    //     gmtCreate: '20290304',
+    //     productPrice: '22',
+    //     Orderid: '3333333333333333333'
+    //   },
+    //   {
+    //     gmtCreate: '20290304',
+    //     productPrice: '22',
+    //     Orderid: '333333333333333333333'
+    //   },
+    //   {
+    //     gmtCreate: '20290304',
+    //     productPrice: '22',
+    //     Orderid: '33333333333333333'
+    //   },
+    //   {
+    //     gmtCreate: '20290304',
+    //     productPrice: '22',
+    //     Orderid: '333333333333333333'
+    //   }
+    // ]
+  };
+  methods = {};
+
+  events = {};
+  onLoad(params, data) {
+    var that = this
+    that.history = data.preload.history
+    if (that.history.length === 0) { that.noneorder = true } else { that.noneorder = false }
+    console.log(that.history)
+  }
+}
+</script>

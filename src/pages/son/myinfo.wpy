@@ -1,0 +1,163 @@
+<style lang="less" >
+.userinfo {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  background: white;
+  height: 350rpx;
+  margin-bottom: 20rpx;
+}
+
+.userinfo-avatar {
+  width: 200rpx;
+  height: 200rpx;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-bottom: 30rpx;
+  box-shadow: 0px 0px 10px #dfdfdf;
+}
+
+.userinfo-nickname {
+  font-size: 13px;
+}
+
+.cell {
+  //border:1px red solid;
+  margin-bottom: 1px;
+  align-items: center;
+  display: flex;
+  height: 100rpx;
+  padding-left: 40rpx;
+  // padding: 20rpx 25rpx 20rpx 30rpx;
+  box-sizing: border-box;
+  background: white;
+  font-size: 13px;
+  color: black;
+}
+.saveinfo {
+  width: 91%;
+  margin-top: 40rpx;
+  height: 100rpx;
+  border-radius: 5px;
+  background: #565656;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+}
+.infoframe {
+  width: 70%;
+}
+.font {
+  width: 20%;
+}
+</style>
+
+
+<template>
+
+   <view class="container">
+
+      <view class="userinfo" >
+        <open-data type="userAvatarUrl" class="userinfo-avatar"></open-data>
+        <open-data type="userNickName" class="userinfo-nickname" lang="zh_CN"></open-data>
+      </view>
+
+      <view class="cell"  >
+          <view class="font" > 昵称  </view>
+          <view class="infoframe" >   <open-data type="userNickName" class="userinfo-nickname" lang="zh_CN"></open-data>  </view>
+      </view>    
+
+      <view class="cell" >
+        <view class="font" > 手机号  </view> 
+         <view class="infoframe" > <input type="text" value="12312" bindinput="telphoneinfo" />    </view>
+      </view>
+
+      <view class="cell" >
+        <view class="font" > 性别  </view>
+        <view class="infoframe" >
+           <radio-group bindchange="radioChange">
+               <label wx:for="{{male}}" wx:key="id">
+                  <radio color="#565656" style="transform:scale(0.65);"  value="{{item.value}}" checked="{{item.checked}}"/>{{item.value}}
+               </label>
+            </radio-group>
+        </view>
+      </view>
+
+      <view class="cell" >        
+        <view class="font" > 生日 </view> 
+           <view class="infoframe" >
+              <picker mode="date" value="{{date}}"  start="1980-06-01" end="2015-06-01" bindchange="bindDateChange">
+                <view>{{date}}</view>
+              </picker>
+           </view>
+      </view>
+     
+      <button class="saveinfo" @tap="save" > 保存 </button>
+
+   </view>
+
+
+</template>   
+
+
+
+<script>
+import wepy from 'wepy'
+
+export default class myinfo extends wepy.page {
+  config = {
+    navigationBarTitleText: '我的信息'
+  };
+  methods = {
+    telphoneinfo(e) {
+      this.telphone = e.detail.value
+    },
+    radioChange(e) {
+      this.male.value = e.detail.value
+      console.log('携带value值为', e.detail.value)
+      if (e.detail.value === '男士') this.sex = 1
+      if (e.detail.value === '女士') this.sex = 0
+    },
+    bindDateChange: function(e) {
+      console.log('携带值为', e.detail.value)
+      this.date = e.detail.value
+    },
+
+    save() {
+      var that = this
+      wepy.request({
+        url: 'http://192.168.10.113:8080/ohtaUser/updateUser', // 接口地址
+        header: {
+          'content-type': 'application/x-www-form-urlencoded'
+        }, // post请求
+        data: {
+          openId: that.openId,
+          userName: that.userinfo,
+          sex: that.sex,
+          telphone: that.telphone,
+          birth: that.date,
+          point: 0
+        },
+        method: 'put',
+        success: function(res) {
+          console.log(res.data)
+        }
+      })
+      console.log('onLoad11111111111111111111111111')
+    }
+  };
+  data = {
+    // ok
+    userinfo: 'Turner',
+    male: [{ value: '男士' }, { value: '女士' }],
+    date: '1995-06-14',
+    sex: 0,
+    telphone: '111',
+    openId: '12'
+  };
+  events = {};
+
+  onLoad() {}
+}
+</script>

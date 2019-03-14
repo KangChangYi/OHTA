@@ -1,0 +1,157 @@
+<style lang="less">
+.container {
+  font-size: 12px;
+}
+.none-frame {
+  // border:1px red solid;
+  margin: 25rpx auto;
+  width: 92vw;
+  height: 95vh;
+  border-radius: 20px;
+  background: white;
+  box-shadow: 0px 0px 12px #dfdfdf;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /*水平居中*/
+}
+.product-bottom {
+  width: 300rpx;
+  height: 70rpx;
+  border-radius: 5px;
+  background: #565656;
+  color: white;
+  font-size: 14px;
+}
+.frame {
+  margin: 25rpx auto;
+  width: 92%;
+  height: 228rpx;
+  border-radius: 10px;
+  background: white;
+  box-shadow: 0px 0px 10px #dfdfdf;
+  box-sizing: border-box;
+  padding: 34rpx 34rpx 34rpx 34rpx;
+}
+.time {
+  width: 77%;
+  margin-top: 15rpx;
+  height: 40rpx;
+  float: left;
+  // border: 1px salmon solid;
+}
+.price {
+  // border: 1px red solid;
+  color: #ff954d;
+  font-size: 15px;
+  font-weight: bold;
+  margin-top: 15rpx;
+  float: left;
+}
+.button {
+  width: 130rpx; //border:1px red solid;
+    margin-top: 15rpx;
+  float: right;
+  height: 50rpx;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #fc8332;
+  border-radius: 5px;
+}
+</style>
+
+<template>
+
+  <view class="container">
+    <!-- 没有订单时界面 -->
+    <view class="none-frame" wx:if="{{noneorder}}">
+      <image src="../images/Expression.png" style="width:128rpx;height:128rpx;">
+        <view style="white-space:pre-wrap;margin-bottom:300rpx;">
+          您还没有下单 \n 快去选择一杯喜欢的茶吧~
+        </view>
+        <button class="product-bottom" @tap="tap"> 去点单 </button>
+    </view>
+    <!-- 没有订单时界面 -->
+    <!-- 有订单时界面 -->
+   
+      <view class="frame" wx:for="{{Unfinishedorder}}" wx:key="Unfinishedorder">
+        <view class="time" style="margin:0;" >下单时间 : {{item.gmtCreate}}</view>
+        <view class="time" style="width:100%" >门店名称 : OH TA 茶舍（天健创智中心2F-07）</view>
+        <view class="price">￥{{item.productPrice}}</view>
+        <view class="button" @tap="detailed" data-index="{{index}}"> 查看详情 </view>
+      </view>
+ 
+    <!-- 有订单时界面 -->
+  </view>
+  
+</template>
+
+
+<script>
+import wepy from 'wepy'
+const app = getApp()
+export default class order extends wepy.page {
+  config = {
+    navigationBarBackgroundColor: '#f5f5f5',
+    navigationBarTitleText: '取单'
+  };
+  methods = {
+    // 将订单详细信息传递至全局订单详细信息
+    detailed(e) {
+      var index = e.currentTarget.dataset.index
+      var that = this
+      app.detailedorderinfo = that.Unfinishedorder[index]
+      this.$preload('Orderinfo', that.Unfinishedorder[index])
+      wepy.navigateTo({
+        url: 'son/order-detailed'
+      })
+    },
+    // 跳转点餐页
+    tap() {
+      wepy.switchTab({
+        url: 'index'
+      })
+    }
+  };
+
+  data = {
+    // 没有订单时隐藏去点单页
+    openId: 2,
+    price: 20,
+    time: '2018-07-13 19:05:02',
+    noneorder: true,
+    Unfinishedorder: [],
+    preloadData: {
+      name: 'Hello',
+      age: '18'
+    }
+  };
+  events = {};
+  onShow() {
+    var that = this
+    console.log('order页面')
+    that.Unfinishedorder = app.Unfinishedorder
+    console.log(that.Unfinishedorder)
+    if (that.Unfinishedorder.length === 0) { that.noneorder = true } else { that.noneorder = false }
+  }
+  onLoad() {
+    // // 判断是否有订单
+    // // var that = this
+    // console.log(that.Unfinishedorder.length)
+    // if (that.Unfinishedorder.length === 0) {
+    //   that.noneorder = true
+    //   that.haveorder = false
+    //   // that.setData({
+    //   //   noneorder: true,
+    //   //   haveorder: false
+    //   // })
+    // } else {
+    //   that.noneorder = false
+    //   that.haveorder = true
+    // }
+  }
+}
+</script>

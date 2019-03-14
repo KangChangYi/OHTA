@@ -1,0 +1,127 @@
+<style lang="less">
+@import 'weui.wxss';
+
+.container {
+  font-size: 13px;
+  color: #565656;
+  height: 100%;
+  width: 100%;
+  // overflow:overflow-x;
+}
+page {
+  background: #f5f5f5;
+}
+</style>
+
+<script>
+import wepy from 'wepy'
+import 'wepy-async-function'
+
+import { setStore } from 'wepy-redux'
+import configStore from './store'
+
+const store = configStore()
+setStore(store)
+
+export default class extends wepy.app {
+  config = {
+    pages: [
+
+      'pages/index',
+      'pages/order',
+      'pages/home',
+
+      'pages/son/order-detailed',
+      'pages/son/order-pay',
+      'pages/son/integral',
+      'pages/son/history',
+      'pages/son/myinfo'
+    ],
+    window: {
+      backgroundTextStyle: 'light',
+      navigationBarBackgroundColor: '#fff',
+      navigationBarTitleText: 'OH·TA 茶舍',
+      navigationBarTextStyle: 'black',
+      enablePullDownRefresh: false
+    },
+    tabBar: {
+      color: '#CDCDCD',
+      borderStyle: 'white',
+      selectedColor: '#ff954d',
+      backgroundColor: '#565656',
+      list: [
+        {
+          pagePath: 'pages/index',
+          iconPath: 'images/tee.png',
+          selectedIconPath: 'images/teesd.png',
+          text: '点单'
+        },
+        {
+          pagePath: 'pages/order',
+          iconPath: 'images/order.png',
+          selectedIconPath: 'images/ordersd.png',
+          text: '取茶'
+        },
+        {
+          pagePath: 'pages/home',
+          iconPath: 'images/mine.png',
+          selectedIconPath: 'images/minesd.png',
+          text: '我的'
+        }
+      ]
+    },
+    networkTimeout: {
+      request: 10000,
+      downloadFile: 10000
+    },
+    debug: true
+  };
+  globalData = {
+    userInfo: null
+  };
+  // 全局变量  全局变量  全局变量
+  order = [];
+  // 商品总价
+  sumprice = 0;
+  detailedorderinfo = [];
+  // 用户未完成订单
+  Unfinishedorder = [];
+  // noneorder = true;
+  url = 'https://39.105.43.132:8080';
+
+  constructor() {
+    super()
+    this.use('requestfix')
+  }
+
+  onLaunch() {
+    this.testAsync()
+  }
+
+  sleep(s) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve('promise resolved')
+      }, s * 1000)
+    })
+  }
+
+  async testAsync() {
+    const data = await this.sleep(3)
+    console.log(data)
+  }
+
+  getUserInfo(cb) {
+    const that = this
+    if (this.globalData.userInfo) {
+      return this.globalData.userInfo
+    }
+    wepy.getUserInfo({
+      success(res) {
+        that.globalData.userInfo = res.userInfo
+        cb && cb(res.userInfo)
+      }
+    })
+  }
+}
+</script>

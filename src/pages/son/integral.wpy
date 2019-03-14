@@ -1,0 +1,70 @@
+<style lang="less">
+page {
+  background: #f5f5f5;
+}
+.integral-top{
+  width:100%;
+  height:350rpx;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:white;
+  font-size:13px;
+  color:black;
+  flex-direction:column;
+  border-bottom:1px #DFDFDF solid;
+}
+.integral{
+  font-size:28px;
+  font-weight:bold;
+}
+</style> 
+
+
+<template>
+
+   <view class="container">
+      <view class="integral-top" >
+          <view class="integral">
+            {{integral}}
+          </view>
+          我的积分
+      </view>
+   </view>
+
+
+</template>
+
+
+
+<script>
+
+import wepy from 'wepy'
+
+export default class Index extends wepy.page {
+  config = {
+    navigationBarTitleText: '积分明细'
+  };
+  data = {
+    openId: 1,
+    integral: '0'
+  };
+  methods = { };
+
+  events = { };          // ok
+  onLoad() {
+    var that = this
+    wepy.request({
+      url: 'http://192.168.10.113:8080/ohtaUser/getUser', // 接口地址
+      header: { 'content-type': 'application/json' }, // 默认值不用改
+      data: {
+        openId: that.openId
+      },
+      success: function(res) {
+        console.log(res.data)
+      }
+    })
+    console.log('onLoad11111111111111111111111111')
+  }
+}
+</script>
